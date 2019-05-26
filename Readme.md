@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/sky-joker/travis-ci-zabbix-test.svg?branch=master)](https://travis-ci.org/sky-joker/travis-ci-zabbix-test)
