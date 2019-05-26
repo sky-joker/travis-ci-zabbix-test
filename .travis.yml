@@ -16,4 +16,4 @@ install:
   - ansible-playbook zabbix_startup_check.yml
 
 script:
-  - python --version
+  - ansible-playbook test_zabbix_group.yml

@@ -1,0 +1,37 @@
+---
+- name: zabbix grpuo module test.
+  hosts: localhost
+  gather_facts: no
+  vars:
+    zabbix_server: "http://127.0.0.1"
+    zabbix_user: "admin"
+    zabbix_passwd: "zabbix"
+    zabbix_ports:
+      - 8030
+      - 8032
+      - 8034
+      - 8040
+      - 8042
+    zabbix_groups:
+      - Example1
+      - Example2
+  tasks:
+    - name: create of zabbix host group.
+      zabbix_group:
+        server_url: "{{ zabbix_server }}:{{ item }}"
+        login_user: "{{ zabbix_user }}"
+        login_password: "{{ zabbix_passwd }}"
+        validate_certs: no
+        host_groups: "{{ zabbix_groups }}"
+        state: present
+      loop: "{{ zabbix_ports }}"
+
+    - name: delete of zabbix host group.
+      zabbix_group:
+        server_url: "{{ zabbix_server }}:{{ item }}"
+        login_user: "{{ zabbix_user }}"
+        login_password: "{{ zabbix_passwd }}"
+        validate_certs: no
+        host_groups: "{{ zabbix_groups }}"
+        state: absent
+      loop: "{{ zabbix_ports }}"
