@@ -1,0 +1,28 @@
+---
+- name: zabbix startup check
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: check login to zabbix.
+      uri:
+        url: "http://127.0.0.1:{{ item }}/api_jsonrpc.php"
+        method: POST
+        body:
+          jsonrpc: "2.0"
+          method: "user.login"
+          params:
+            user: "admin"
+            password: "zabbix"
+          id: "1"
+        body_format: json
+        status_code: 200
+      retries: 60
+      delay: 5
+      until: result is defined and 'json' in result and 'result' in result.json
+      register: result
+      loop:
+        - 8030
+        - 8032
+        - 8034
+        - 8040
+        - 8042
